@@ -24,8 +24,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 ###### Usa a mesma imagem base enxuta para consistência, agora para rodar a aplicação
 FROM python:3.9-slim
 
-###### Define fuso horário e certificados (essencial para AWS)
-RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates tzdata \
+###### Define fuso horário, certificados (essencial para AWS) e atualiza pacotes com correções de segurança
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends ca-certificates tzdata \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
