@@ -17,6 +17,7 @@ COPY requirements.txt .
 
 ###### Instala as bibliotecas de forma otimizada (sem cache do pip)
 RUN pip install --no-cache-dir -r requirements.txt
+RUN opentelemetry-bootstrap -a install
 
 ###### ==============================================================================
 ###### ESTÁGIO DE EXECUÇÃO (FINAL STAGE)
@@ -54,4 +55,4 @@ ENV PORT=8005
 EXPOSE 8005
 
 ###### Executa o Gunicorn lendo a porta mapeada
-CMD ["gunicorn", "--bind", "0.0.0.0:8005", "app:app"]
+CMD ["opentelemetry-instrument", "python", "app.py"]
